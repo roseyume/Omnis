@@ -21,6 +21,7 @@ function askChatBot(userInput)
     body: userInput
   });
 
+  
   fetch(myRequest).then(function(response)
   {
     if (!response.ok)
@@ -38,5 +39,7 @@ function askChatBot(userInput)
   }).catch((err) =>
   {
     console.error(err);
-  });
+  })
 }
+
+

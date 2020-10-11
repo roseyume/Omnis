@@ -11,8 +11,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
     def do_POST(self):
-        self.send_response(200)
+        print('self',self)
+        status=self.send_response(200)
+        print('status', status)
         content_length = int(self.headers['Content-Length'])
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "x-api-key,Content-Type")
         post_body = self.rfile.read(content_length)
         self.end_headers()
         print('user query', post_body)
