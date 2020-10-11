@@ -1,3 +1,20 @@
+app.use((req, res, next) => {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+ // Request headers you wish to allow
+ res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type, token, language');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next(); 
+});
 
 function openNav() {
   document.getElementById("sideNav").style.display = "block";
@@ -32,16 +49,12 @@ function sendUserResponse() {
   
 }
 
-function thinking() {
-  buildResponse("...");
-}
-
 function buildResponse (response) {
   var para = document.createElement("p");
   para.innerHTML = response;
-  para.setAttribute('class','chat-message omni');
+  para.setAttribute('class','chat-message omnis');
   var photo = document.createElement("div");
-  photo.setAttribute('class','omni user-photo');
+  photo.setAttribute('class','omnis user-photo');
   var message = document.createElement("div");
   message.setAttribute('class','chat');
   message.appendChild(photo);
@@ -52,25 +65,18 @@ function buildResponse (response) {
   log.scrollTop = log.scrollHeight;
 }
 
-function stopThinking() {
-  console.log("stopThinking");
-  var log = document.getElementById("chatlog").lastChild.remove();
-}
-
 function omnisRespond( request ) {
-  thinking();
   var response = findAnswer(request);
-  var log = document.getElementById("chatlog").lastChild.innerHTML=response;
-  buildResponse(response);
 }
 
 function findAnswer( request ) {
   console.log(request);
-  const myRequest = new Request('/', {
+  const myRequest = new Request('http://127.0.0.1:8000/', {
     method: 'POST',
     body: request
   });
   console.log(myRequest);
+
 
   fetch(myRequest).then(function(response)
   {
@@ -84,10 +90,10 @@ function findAnswer( request ) {
     }
   }).then(function(text)
   {
-    chatbotInput.value = '';
-    chatbotOutput.innerText = text;
+    buildResponse(text);
   }).catch((err) =>
   {
     console.error(err);
-  });
+  })
+  
 }

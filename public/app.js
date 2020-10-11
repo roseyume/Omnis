@@ -21,6 +21,7 @@ function askChatBot(userInput)
     body: userInput
   });
 
+  withTimeout(5000, 
   fetch(myRequest).then(function(response)
   {
     if (!response.ok)
@@ -38,5 +39,17 @@ function askChatBot(userInput)
   }).catch((err) =>
   {
     console.error(err);
+  })
+  )
+  .then(doSomething)
+  .catch(handleError);
+}
+
+function withTimeout(msecs, promise) {
+  const timeout = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error('timeout'));
+    }, msecs);
   });
+  return Promise.race([timeout, promise]);
 }

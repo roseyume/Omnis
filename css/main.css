@@ -247,7 +247,7 @@ a:hover{
 }
 
 .omnis.chat-message {
-  background:var(--main-orange);
+  background: var(--main-orange);
   position: relative;
   float: left;
 }

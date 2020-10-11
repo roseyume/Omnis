@@ -36,6 +36,7 @@ def chatbot_query(query, index=0):
         if len(chars_without_whitespace) > 0:
             result = first_sentence
             print("how old is samuel :(")
+            print(result)
 
         else:
             result = fallback
